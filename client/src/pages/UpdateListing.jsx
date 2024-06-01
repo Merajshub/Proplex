@@ -163,7 +163,7 @@ export const UpdateListing =()=>{
 
             <input onChange={handleChange} value={formData.name} type="text"  placeholder="Name" id="name" maxLength='62' minLength='10' required className="border p-3 rounded-lg"/>
 
-            <textarea onChange={handleChange} value={formData.description} type="text"  placeholder="Desription" id="description" maxLength='62' minLength='10' required className="border rounded-lg p-3"/>
+            <textarea onChange={handleChange} value={formData.description} type="text"  placeholder="Desription" id="description" maxLength='620' minLength='10' required className="border rounded-lg p-3"/>
 
             <input onChange={handleChange} value ={formData.address} type="text"  placeholder="Address" id="address"  required className="border p-3 rounded-lg"/>
             
