@@ -17,6 +17,7 @@ export const Search = ()=>{
     });
     const[loading,setLoading] = useState(false);
     const[listings,setListings] = useState([]);
+    const [showMore ,setShowMore] = useState(false);
     console.log(listings);
     useEffect(()=>{
         const urlParams = new URLSearchParams(location.search);
@@ -43,9 +44,16 @@ export const Search = ()=>{
         }
         const fetchListings = async()=>{
             setLoading(true);
+            setShowMore(false);
+            
             const searchQuery = urlParams.toString();
             const res  = await fetch(`/api/listing/get?${searchQuery}`);
-            const data = await res.json(); 
+            const data = await res.json();
+            if(data.length>6){
+                setShowMore(true);
+            } else{
+                setShowMore(false);
+            }
             setListings(data);
             setLoading(false);
         };
@@ -83,6 +91,22 @@ export const Search = ()=>{
         urlParams.set('order' ,sidebardata.order)
         const searchQuery = urlParams.toString();
         navigate(`/search?${searchQuery}`);
+
+    }
+
+    const onShowMoreClick = async()=>{
+        // fetching data for Show more form index 9  not from 0
+        const numberOfListings = listings.length;
+        const startIndex = numberOfListings;
+        const urlParams = new URLSearchParams(location.search);
+        urlParams.set('startIndex' , startIndex);
+        const searchQuery = urlParams.toString();
+        const res  = await fetch(`/api/listing/get?${searchQuery}`);
+        const data  =await res.json();
+        if(data.length<3){
+            setShowMore(false);
+        }
+        setListings([...listings,...data]);
 
 
     }
@@ -143,7 +167,10 @@ export const Search = ()=>{
                 {loading && (
                     <p className="text-xl text-slate-700 text-center w-full"> Loading...</p>
                 )}
-                {!loading && listings && listings.map((listing)=>(<ListingItem key={listings._id} listing = {listing}/>))}
+                {!loading && listings && listings.map((listing)=><ListingItem key={listing._id} listing = {listing}/>)}
+                {showMore && (
+                    <button onClick={onShowMoreClick} className="text-green-700 hover:underline p-7 w-full"> Show more</button>
+                )}
             </div>
         </div>
     </div>

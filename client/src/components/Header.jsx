@@ -18,7 +18,7 @@ export const Header= () => {
         navigate(`/search?${searchQuery}`);
 
     };
-    useEffect( ()=>{
+    useEffect(()=>{
         const urlParams = new URLSearchParams(location.search);
         const searchTermFromUrl = urlParams.get('searchTerm');
         if(searchTermFromUrl){
