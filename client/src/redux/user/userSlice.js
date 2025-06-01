@@ -74,3 +74,7 @@ const userSlice = createSlice({
 export const {signInStart,signInSuccess,signInFailure,deleteUserStart,deleteUserSuccess,deleteUserFailure,signOutUserStart,signOutUserSuccess,signOutUserFailure,updateUserFailure,updateUserStart,updateUserSuccess} = userSlice.actions;
 
 export default userSlice.reducer;
+
+
+// The userSlice.reducer is exported and combined into the store.
+// The signInStart, signInSuccess, and signInFailure action creators are dispatched to update the state.

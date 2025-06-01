@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 
 
 
-
 export const Profile = () => {
     const fileRef = useRef(null);
     const {currentUser,loading,error} = useSelector((state)=>state.user);
@@ -19,6 +18,7 @@ export const Profile = () => {
     const [formData,setFormData] = useState({});
     const [updateSuccess,setUpdateSuccess] = useState(false);
     const [showListingError,setShowListingError] = useState(false);
+    // const [showListings,setShowListings] = useState(false)
     const [userListings,setUserListings] = useState([]);
     const dispatch = useDispatch();
 
@@ -137,9 +137,11 @@ export const Profile = () => {
                 return;
             }
             setUserListings(data);
+            setShowListings(true)
             
         } catch (error) {
             setShowListingError(true);
+            setShowListings(false);
             
         }
 
@@ -187,10 +189,10 @@ export const Profile = () => {
         <p className="text-red-700 mt-4">{error ? error: ''}</p>
         <p className="text-green-700 mt-4">{updateSuccess ? 'User is updated sucessfully!':''}</p>
         <button onClick={handleShowListing} className="text-green-700 w-full">Show Listing</button>
-        <p className="text-red-700 mt-5">{showListingError ? 'Error showing listings' : ""}</p>
+        <p className="text-red-700 mt-5">{userListings.length <= 0 && showListingError ? 'Error showing listings / Listings not available for this user' : ""}</p>
 
-        {userListings && userListings.length > 0 && 
-        <div className=" flex flex-col gap-4">
+         
+        {!userListings.length <=0 ? <div className=" flex flex-col gap-4">
             <h1 className="text-center mt-7 text-2xl font-semibold">Your Listings </h1>
         {userListings.map((listing)=>(
         <div className=" border rounded-lg p-3 items-center flex justify-between gap-4" key={listing._id}>
@@ -209,7 +211,7 @@ export const Profile = () => {
             </div>
         </div>))}
 
-        </div>}
+        </div>:""}
 
         </div>
 }

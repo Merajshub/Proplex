@@ -8,7 +8,7 @@ import listingRoute from'./routes/listing.route.js'
 
 
 
-dotenv.config();
+dotenv.config({path:'../.env'});
 mongoose.connect(process.env.MONGO).then(()=>{
     console.log("connected to DB");
 }).catch((err)=>{

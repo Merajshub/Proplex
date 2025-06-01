@@ -29,7 +29,7 @@ export const Signin = () => {
         e.preventDefault();
         try {
             // setLoading(true);
-            dispatch(signInStart)
+            dispatch(signInStart())
             const res = await fetch('/api/auth/signin',
             {
                 method: 'POST',

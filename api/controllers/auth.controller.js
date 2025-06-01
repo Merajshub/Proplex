@@ -25,9 +25,9 @@ export const signin = async(req,res,next)=>{
     const {email,password} = req.body;
     try {
         const validUser = await User.findOne({email:email})
-            if(!validUser){
-                return next(errorHandler(404,'User not found'));
-            }
+        if(!validUser){
+            return next(errorHandler(404,'User not found'));
+        }
             const validPassword = bcryptjs.compareSync(password, validUser.password)
             if(!validPassword){
                 return next(errorHandler(401,' Wrong Credentials!'))
@@ -37,9 +37,9 @@ export const signin = async(req,res,next)=>{
             // saving this token as a cookie
             res.cookie('access_token',token,{httpOnly:true}).status(200).json(rest);
             
-        
-    } catch (error) {
-        next(error)
+            
+        } catch (error) {
+            next(error)
     }
 
 }
@@ -49,7 +49,7 @@ export const google = async(req,res,next)=>{
         if(user){
             const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
             const { password: pass, ...rest } = user._doc;
-            res.cookie('access token', token,{httpOnly:true}).status(200).json(rest);
+            res.cookie('access_token', token,{httpOnly:true}).status(200).json(rest);
             // rest is all the data of this current user except Password.
         }else{
             const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8) ;

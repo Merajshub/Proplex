@@ -5,12 +5,14 @@ import { Link } from "react-router-dom";
 export  function Contact({listing}){
     const [landlord,setLandlord] = useState(null);
     const [message,setMessage] = useState(null);
-    // console.log(listing.userRef);
+    console.log(listing.userRef);
     useEffect(()=>{
         const fetchLandlord = async()=>{
             try {
                 const res = await fetch(`/api/user/${listing.userRef}`)
                 const data = await res.json();
+                // console.log(data);
+                
                 if(data.success === false){
                     return
                 }
